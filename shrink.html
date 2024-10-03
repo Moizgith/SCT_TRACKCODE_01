@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        nav {
+            width: 100vw;
+            height: 7vh;
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: end;
+            position: fixed;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+            align-items: center;
+            width: 60%;
+            height: 100%;
+        }
+
+        nav ul li {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        section {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        section:nth-child(2) {
+            background-color: blue;
+        }
+
+        section:nth-child(3) {
+            background-color: green;
+        }
+
+        section:nth-child(4) {
+            background-color: yellowgreen;
+        }
+
+        section:nth-child(5) {
+            background-color: brown;
+        }
+
+        /* Adjust sections to prevent nav overlap */
+        section {
+            margin-top: 7vh;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <ul id="menu">
+                <li><a href="#Home">Home</a></li>
+                <li><a href="#Services">Services</a></li>
+                <li><a href="#About">About us</a></li>
+                <li><a href="#Contact">Contact Us</a></li>
+                <li><a href="#Careers">Careers</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="Home"></section>
+    <section id="Services"></section>
+    <section id="About"></section>
+    <section id="Contact"></section>
+    <section id="Careers" style="background-color: grey;"></section>
+
+    <script>
+        // Select all sections
+        const sections = document.querySelectorAll('section');
+
+        // Select all menu items
+        const menuItems = document.querySelectorAll('#menu li a');
+
+        // Function to detect which section is in the viewport and apply section color to the menu text
+        function handleScroll() {
+            sections.forEach((section) => {
+                const rect = section.getBoundingClientRect();
+                const sectionId = section.getAttribute('id');
+                const sectionColor = window.getComputedStyle(section).backgroundColor;
+
+                // Check if the section is in the viewport
+                if (rect.top >= -100 && rect.top < window.innerHeight / 2) {
+                    // Add 'active' class to the corresponding menu item and change its text color
+                    menuItems.forEach((item) => {
+                        item.style.color = ''; // Reset text color
+                        if (item.getAttribute('href').substring(1) === sectionId) {
+                            item.style.color = sectionColor; // Apply the section's background color to the text
+                        }
+                    });
+                }
+            });
+        }
+
+        // Add the scroll event listener to the window
+        window.addEventListener('scroll', handleScroll);
+
+        // Trigger the function once to highlight the first section on page load
+        window.addEventListener('DOMContentLoaded', handleScroll);
+    </script>
+</body>
+
+</html>
